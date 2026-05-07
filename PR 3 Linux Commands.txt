@@ -1,0 +1,78 @@
+STEP 1: Ubuntu update 
+Ubuntu terminal मध्येटाईपकरा:
+sudo apt update
+
+username: student
+Password: student 
+
+________________________________________
+STEP 2: C compiler install 
+sudo dpkg --configure -a
+sudo apt install build-essential
+
+
+Go to file location. For example if file sum.c is at D:\sum.c Then use following command to go to D:\ Drive
+cd /mnt/d/
+________________________________________
+STEP 3: Create File
+nano sum.c
+Editor will be opened
+STEP 4: paste the code 
+#include <stdio.h>
+#include <omp.h>
+intmain()
+{
+int n, i;	int sum = 0;
+printf("Enter number of elements: ");	scanf("%d", &n);
+intarr[n];
+printf("Enter elements:\n");
+    for(i = 0; i< n; i++) 
+{
+scanf("%d", &arr[i]);
+    }
+    #pragma omp parallel num_threads(2)
+    {
+intlocal_sum = 0;
+intthread_id = omp_get_thread_num();
+inttotal_threads = omp_get_num_threads();
+        for(i = thread_id; i< n; i += total_threads) 
+	{
+local_sum += arr[i];
+        }
+
+printf("Thread %d partial sum = %d\n", thread_id, local_sum);
+
+        #pragma omp atomic
+        sum += local_sum;
+    }
+printf("Final Sum = %d\n", sum);
+    return 0;
+}
+/*OUTPUT: Enter number of elements: 4
+Enter elements:1 2 3 4
+Output:Thread 0 partial sum = 4
+Thread 1 partial sum = 6
+Final Sum = 10
+*/
+________________________________________
+STEP 5: Save 
+nanoमध्ये:
+Ctrl + O
+Enter
+Ctrl + X
+________________________________________
+STEP 6: Compile
+Go to file location. For example if file sum.c is at D:\sum.c Then use following command to go to D:\ Drive
+cd /mnt/d/
+
+
+
+Compile
+gcc -fopenmp sum.c -o sum
+STEP 7: Run
+./sum
+________________________________________
+#pragma omp parallel num_threads(2)
+👉 2 threads तयारहोतात
+👉 Block 2 वेळा execute होतो
+👉 प्रत्येक thread वेगळे elements add करतो
