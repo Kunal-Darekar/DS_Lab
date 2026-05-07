@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WebService Build File -->
+<project basedir="." default="help" name="WebService">
+    <description>Builds, tests, and runs the project WebService.</description>
+</project>
